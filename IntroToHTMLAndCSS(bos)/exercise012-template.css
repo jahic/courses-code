@@ -1,0 +1,124 @@
+body
+{
+    background-image: url("img/img5.jpg");
+    backgroud-repeat: repeat-x repeat-y;
+}
+#okvir
+{
+    /*width:950px;*/
+    width: 80%;
+    margin-top:0px;    
+    margin-left:auto;    
+    margin-right:auto;    
+}
+	
+#zaglavlje
+{
+    width: 100%;
+    /*height: 150px;*/ 
+    background: blue;
+    float:left;
+}
+
+#zaglavlje p
+{
+    color: white;
+    font-size: 50px;
+    padding-top: 30px;
+    text-align: center;
+    margin: 0px;
+}
+
+#sadrzaj
+{
+    /*height: 550px;*/
+    width: 100%;
+    background: yellow;
+    float:left;    
+}
+
+#sadrzaj p
+{
+    font-size: 40px;    
+}
+
+#glavni_sadrzaj
+{
+    float: left;
+    padding-left:5px;
+}
+
+#podnozje
+{
+    width: 100%;
+    /*height: 150px;*/
+    background: brown;
+    float:left;
+}
+
+#podnozje p
+{
+    color: white;
+    font-size: 50px;
+    padding-top: 30px;
+    text-align: center;
+    margin: 0px;
+}
+
+#sadrzaj p:hover
+{
+    font-weight: bold;
+}
+
+#sadrzaj p
+{
+    color:red;
+}
+
+#slike
+{
+    padding: 10px;
+    float:right;
+}
+
+#navigacija ul li
+{
+    display:block;
+}
+
+#navigacija ul li h4
+{
+    text-align: center;
+}
+
+#navigacija ul
+{
+    padding: 0px;
+}
+#navigacija
+{
+    float: left;
+    /*width: 950px;*/
+    width: 100%;
+    background:blue;
+    margin:0px;
+    padding:0px;
+}
+
+#navigacija ul li h4 a:link, a:visited
+{
+    background: url("img/img6.gif") repeat-x;
+    text-decoration: none;
+    /*width: 237px;*/
+    width: 25%;
+    height:20px;
+    float:left;
+    color:yellow;
+}
+
+#navigacija ul li h4 a:hover
+{
+    background-position:bottom;
+    color:white;
+    font-style: italic;
+}

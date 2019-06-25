@@ -1,0 +1,19 @@
+body
+{
+    background-image: url("img/img10.jpg");
+    background-repeat: repeat;
+}
+
+.p1
+{
+    color: blue;
+    background-color: yellow;
+}
+
+.p2
+{
+    color: #C70039;
+    background-color: #000000;
+}
+	
+	

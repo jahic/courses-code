@@ -1,0 +1,52 @@
+#zaglavlje
+{
+    background-color: blue;
+    height : 100px;
+}
+
+#zaglavlje p
+{
+    color: white;
+}
+
+#sadrzaj
+{
+    background-color: yellow;
+    height: 200px;
+}
+
+#sadrzaj .ime
+{
+    color: red;
+}
+
+#sadrzaj .email
+{
+    color: blue;
+}
+
+#sadrzaj .grad
+{
+    color: green;
+}
+
+#sadrzaj .drzava
+{
+    color: brown;
+}
+
+#podnozje
+{
+    background-color: brown;
+    height: 350px;
+}
+
+#podnozje p
+{
+    color: white;
+}
+
+#podnozje .email
+{
+    color: yellow;
+}

@@ -1,0 +1,12 @@
+body
+{
+    background-image: url("img/img10.jpg");
+    background-repeat: repeat;
+}
+
+p
+{
+    color: blue;
+    background-color: yellow;
+}
+	
