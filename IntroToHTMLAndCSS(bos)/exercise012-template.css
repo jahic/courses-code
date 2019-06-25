@@ -5,7 +5,6 @@ body
 }
 #okvir
 {
-    /*width:950px;*/
     width: 80%;
     margin-top:0px;    
     margin-left:auto;    
@@ -15,8 +14,8 @@ body
 #zaglavlje
 {
     width: 100%;
-    /*height: 150px;*/ 
     background: blue;
+    /*1. Komentariši float*/
     float:left;
 }
 
@@ -31,9 +30,11 @@ body
 
 #sadrzaj
 {
-    /*height: 550px;*/
+    /* Komentar 3: Izbriši komentar oko  height*/
+    /*height: 350px;*/
     width: 100%;
     background: yellow;
+    /*1. Komentarisi float*/
     float:left;    
 }
 
@@ -51,9 +52,9 @@ body
 #podnozje
 {
     width: 100%;
-    /*height: 150px;*/
     background: brown;
-    float:left;
+    /*1. Komentarisi float*/
+   float:left;
 }
 
 #podnozje p
@@ -98,7 +99,6 @@ body
 #navigacija
 {
     float: left;
-    /*width: 950px;*/
     width: 100%;
     background:blue;
     margin:0px;
@@ -109,7 +109,6 @@ body
 {
     background: url("img/img6.gif") repeat-x;
     text-decoration: none;
-    /*width: 237px;*/
     width: 25%;
     height:20px;
     float:left;
