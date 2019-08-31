@@ -64,7 +64,8 @@ int main(int argc, char* argv[])
 
 void generateFileWithRandomValues(string fileName)
 {
-    FILE * file=fopen(fileName.c_str(),"w");
+    ofstream file;
+    file.open(fileName.c_str());
 
     std::random_device random_device;
     std::mt19937 random_engine(random_device());
@@ -75,8 +76,10 @@ void generateFileWithRandomValues(string fileName)
     {
         int randomNumber = distribution_1_100(random_engine);
 
-        fprintf (file, "%d\n",randomNumber);
+        file << randomNumber;
+        file << "\n";
     }
+    file.close();
 }
 
 void readValuesFromMatrixToVector(string fileName)
