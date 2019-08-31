@@ -27,7 +27,7 @@ void findNumberInVector(int theNumber)
     }
 }
 
-// ./program placeInTheVector theNumber
+// ./program theNumber
 int main(int argc, char* argv[])
 {
     int theNumber = 9;
