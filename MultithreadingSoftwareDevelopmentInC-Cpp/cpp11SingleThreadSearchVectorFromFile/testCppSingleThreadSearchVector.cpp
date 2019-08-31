@@ -16,8 +16,8 @@ void generateVectorWithValues();
 void generateFileWithRandomValues(string fileName);
 void readValuesFromMatrixToVector(string fileName);
 
-// Returns the index where the number is.
-// Otherwise, returns -1.
+// Finds theNumber in the global variable vectorWithValues.
+// Updates the numberOfOccurences.
 void findNumberInVector(int theNumber)
 {
     for(long long i = 0; i < vectorWithValues->size(); i++)
