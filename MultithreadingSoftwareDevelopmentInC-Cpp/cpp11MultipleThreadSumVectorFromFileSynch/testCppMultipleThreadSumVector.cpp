@@ -36,7 +36,7 @@ void readValuesFromMatrixToVector(string fileName);
 // Protect the sum operation with a lock.
 void sumVector(long long vectorPartStart, long long vectorPartEnd)
 {
-    //cout << "Thread["<< this_thread::get_id() <<"]::start("<<vectorPartStart<<"); end("<<vectorPartEnd<<")." << endl;
+    cout << "Thread["<< this_thread::get_id() <<"]::start("<<vectorPartStart<<"); end("<<vectorPartEnd<<")." << endl;
     for(long long i = vectorPartStart; i < vectorPartEnd; i++)
     {
         l.lock();
