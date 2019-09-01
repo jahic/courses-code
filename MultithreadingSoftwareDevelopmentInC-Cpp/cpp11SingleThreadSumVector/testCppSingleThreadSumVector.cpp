@@ -6,48 +6,35 @@
 #include <fstream>
 
 /****
-    * Generates a file with random values.
-    * Saves a file to a vector.
-    * Searches the vector and counts the number of occurences of a number in the vector.
-    * Multithreaded solution
-***/
+    * Generate or load a file with random values.
+    * Load the values in a vector.
+    * Calculate the sum of all members.
+    */
 
 using namespace std;
 
-long long VECTOR_SIZE = 4000000;
+long long VECTOR_SIZE = 5000000;
 vector<int>* vectorWithValues;
-
-long numberOfOccurences=0;
 
 void generateVectorWithValues();
 void generateFileWithRandomValues(string fileName);
 void readValuesFromMatrixToVector(string fileName);
 
-// Find occurences of theNumber in the global vriable vectorWithValues.
-// Update global variable numberOfOccurences.
-void findNumberInVector(int theNumber)
+// Return the sum of the global vectorWithValues. 
+long long sumVector()
 {
+    long long sum = 0;
+
     for(long long i = 0; i < vectorWithValues->size(); i++)
     {
-        if(vectorWithValues->at(i) == theNumber)
-            numberOfOccurences = numberOfOccurences + 1;
+        sum = sum + vectorWithValues->at(i);
     }
+    return sum;
 }
 
-// ./program theNumber
+// ./program
 int main(int argc, char* argv[])
 {
-    int theNumber = 9;
-
-    if(argc==2)
-        theNumber = strtol(argv[1], nullptr, 0);    
-
-    if(theNumber<0 || theNumber>100)
-    {
-        cout << "The number is out of the [0,100] range." << endl;
-        return 0;
-    }
-
     generateFileWithRandomValues("matrixRandom.txt");
     //VECTOR_SIZE = 0;
 
@@ -57,14 +44,14 @@ int main(int argc, char* argv[])
     readValuesFromMatrixToVector("matrixRandom.txt");
 
     auto start = std::chrono::high_resolution_clock::now();
-    findNumberInVector(theNumber);
+    long long sum = sumVector();
     auto finish = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double> elapsedTime = finish - start;
 
-    std::cout << "Search duration = " << elapsedTime.count() << "[s]" <<  endl;
+    std::cout << "Sum duration = " << elapsedTime.count() << "[s]" <<  endl;
 
-    cout << "The number of occurences of " << theNumber << " in the vector is "<< numberOfOccurences<< "." << endl;
+    cout << "The sum of numbers in the vector is " << sum << "."<< endl;
 
     delete(vectorWithValues);
     return 0;
@@ -74,6 +61,7 @@ void generateFileWithRandomValues(string fileName)
 {
     ofstream file;
     file.open(fileName.c_str());
+    //FILE * file=fopen(fileName.c_str(),"w");
 
     std::random_device random_device;
     std::mt19937 random_engine(random_device());
@@ -83,9 +71,9 @@ void generateFileWithRandomValues(string fileName)
     for(long long i = 0; i < VECTOR_SIZE; i++)
     {
         int randomNumber = distribution_1_100(random_engine);
-
         file << randomNumber;
         file << "\n";
+        //fprintf (file, "%d\n",randomNumber);
     }
     file.close();
 }
@@ -110,4 +98,6 @@ void readValuesFromMatrixToVector(string fileName)
         int i_dec = std::stoi(str,&sz);
 		vectorWithValues->push_back(i_dec);
 	}
+
+    in.close();
 }

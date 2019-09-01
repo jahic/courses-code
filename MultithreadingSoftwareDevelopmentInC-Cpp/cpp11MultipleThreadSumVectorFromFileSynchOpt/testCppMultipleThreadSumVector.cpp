@@ -5,18 +5,25 @@
 #include <algorithm>
 #include <fstream>
 #include <thread>
-
+#include <mutex>
 /****
-    * Saves a file to a vector.
-    * Searches the vector and counts the number of occurences of a number in the vector.
-    * Multithreaded solution
-***/
+    * Generate or load a file with random values.
+    * Load the values in a vector.
+    * Divide the vector to parts and assign the parts to different threads.
+    * Calcuate the sum of all members.
+    * Optimized to reduce synchronization over a lock.
+    */
+
 using namespace std;
 
 #define NUMBER_OF_THREADS 2
 
-long long VECTOR_SIZE = 4000000;
+long long VECTOR_SIZE = 5000000;
 vector<int>* vectorWithValues;
+
+long long sum=0;
+
+mutex l;
 
 long numberOfOccurences=0;
 
@@ -24,34 +31,28 @@ void generateVectorWithValues();
 void generateFileWithRandomValues(string fileName);
 void readValuesFromMatrixToVector(string fileName);
 
-// Find occurences of theNumber in the global vriable vectorWithValues.
-// Update global variable numberOfOccurences.
-void findNumberInVector(int theNumber, long long vectorPartStart, long long vectorPartEnd)
+// Calculate the sum of the members of the vector.
+// From vectorPartStart until the vectorPartEnd.
+// Wait to update the sum until the sum of the part of the vector between vectorPartStart and vectorPartEnd is ready.
+// Protect the sum operation with a lock.
+void sumVector(long long vectorPartStart, long long vectorPartEnd)
 {
+    long long sumLocal = 0;
     cout << "Thread["<< this_thread::get_id() <<"]::start("<<vectorPartStart<<"); end("<<vectorPartEnd<<")." << endl;
     for(long long i = vectorPartStart; i < vectorPartEnd; i++)
     {
-        if(vectorWithValues->at(i) == theNumber)
-            numberOfOccurences = numberOfOccurences + 1;
+        sumLocal = sumLocal + vectorWithValues->at(i);
     }
+    l.lock();
+        sum = sum + sumLocal;
+    l.unlock();
 }
 
-// ./program theNumber
+// ./program
 int main(int argc, char* argv[])
 {
-    int theNumber = 9;
-
-    if(argc==2)
-        theNumber = strtol(argv[1], nullptr, 0);    
-
-    if(theNumber<0 || theNumber>100)
-    {
-        cout << "The number is out of the [0,100] range." << endl;
-        return 0;
-    }
-
     //generateFileWithRandomValues("matrixRandom.txt");
-    VECTOR_SIZE = 0;
+    VECTOR_SIZE=0;
 
     // Allocate the vector items on heap.
     vectorWithValues = new vector<int>;
@@ -69,7 +70,7 @@ int main(int argc, char* argv[])
     {
         vectorPartStart = (VECTOR_SIZE/NUMBER_OF_THREADS)*i;
         vectorPartEnd = (VECTOR_SIZE/NUMBER_OF_THREADS)*(i+1);
-        threads.push_back(thread(findNumberInVector, theNumber, vectorPartStart, vectorPartEnd));
+        threads.push_back(thread(sumVector, vectorPartStart, vectorPartEnd));
     }
 
     // Wait for threads to end.
@@ -80,9 +81,9 @@ int main(int argc, char* argv[])
 
     std::chrono::duration<double> elapsedTime = finish - start;
 
-    cout << "Search duration = " << elapsedTime.count() << "[s]" <<  endl;
+    cout << "Sum duration = " << elapsedTime.count() << "[s]" <<  endl;
 
-    cout << "The number of occurences of " << theNumber << " in the vector is "<< numberOfOccurences<< "." << endl;
+    cout << "The sum of numbers in the vector is " << sum << "."<< endl;
 
     delete(vectorWithValues);
     return 0;
@@ -101,7 +102,6 @@ void generateFileWithRandomValues(string fileName)
     for(long long i = 0; i < VECTOR_SIZE; i++)
     {
         int randomNumber = distribution_1_100(random_engine);
-
         file << randomNumber;
         file << "\n";
     }
@@ -111,22 +111,24 @@ void generateFileWithRandomValues(string fileName)
 void readValuesFromMatrixToVector(string fileName)
 {
 	// Open the File
-	ifstream in(fileName.c_str());
+	std::ifstream in(fileName.c_str());
  
 	// Check if object is valid
 	if(!in)
 	{
-		cerr << "Cannot open the file : "<<fileName<<std::endl;
+		std::cerr << "Cannot open the File : "<<fileName<<std::endl;
 		return;
 	}
  
-	string str;
-	// Read the next line from the file untill it reaches the end.
-	while (getline(in, str))
+	std::string str;
+	// Read the next line from File untill it reaches the end.
+	while (std::getline(in, str))
 	{
-		string::size_type sz;   // alias of size_t
-        int i_dec = stoi(str,&sz);
+		std::string::size_type sz;   // alias of size_t
+        int i_dec = std::stoi(str,&sz);
 		vectorWithValues->push_back(i_dec);
         VECTOR_SIZE++;
 	}
+
+    in.close();
 }

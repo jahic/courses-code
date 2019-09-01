@@ -5,12 +5,13 @@
 #include <algorithm>
 #include <fstream>
 #include <thread>
+#include <mutex>
 
 /****
-    * Saves a file to a vector.
-    * Searches the vector and counts the number of occurences of a number in the vector.
-    * Multithreaded solution
-***/
+    * Generates a vector of random numbers.
+    * Divide vector to threads. Find the number of occurences of a certain number.
+    */ 
+
 using namespace std;
 
 #define NUMBER_OF_THREADS 2
@@ -18,11 +19,14 @@ using namespace std;
 long long VECTOR_SIZE = 4000000;
 vector<int>* vectorWithValues;
 
+mutex l;
+
 long numberOfOccurences=0;
 
 void generateVectorWithValues();
 void generateFileWithRandomValues(string fileName);
 void readValuesFromMatrixToVector(string fileName);
+void findNumberInVector(int theNumber, long long vectorPartStart, long long vectorPartEnd);
 
 // Find occurences of theNumber in the global vriable vectorWithValues.
 // Update global variable numberOfOccurences.
@@ -32,7 +36,11 @@ void findNumberInVector(int theNumber, long long vectorPartStart, long long vect
     for(long long i = vectorPartStart; i < vectorPartEnd; i++)
     {
         if(vectorWithValues->at(i) == theNumber)
-            numberOfOccurences = numberOfOccurences + 1;
+        {
+            l.lock();
+                numberOfOccurences = numberOfOccurences + 1;
+            l.unlock();
+        }
     }
 }
 
@@ -51,7 +59,7 @@ int main(int argc, char* argv[])
     }
 
     //generateFileWithRandomValues("matrixRandom.txt");
-    VECTOR_SIZE = 0;
+    VECTOR_SIZE=0;
 
     // Allocate the vector items on heap.
     vectorWithValues = new vector<int>;
@@ -80,7 +88,7 @@ int main(int argc, char* argv[])
 
     std::chrono::duration<double> elapsedTime = finish - start;
 
-    cout << "Search duration = " << elapsedTime.count() << "[s]" <<  endl;
+    std::cout << "Search duration = " << elapsedTime.count() << "[s]" <<  endl;
 
     cout << "The number of occurences of " << theNumber << " in the vector is "<< numberOfOccurences<< "." << endl;
 
@@ -111,21 +119,21 @@ void generateFileWithRandomValues(string fileName)
 void readValuesFromMatrixToVector(string fileName)
 {
 	// Open the File
-	ifstream in(fileName.c_str());
+	std::ifstream in(fileName.c_str());
  
 	// Check if object is valid
 	if(!in)
 	{
-		cerr << "Cannot open the file : "<<fileName<<std::endl;
+		std::cerr << "Cannot open the File : "<<fileName<<std::endl;
 		return;
 	}
  
-	string str;
-	// Read the next line from the file untill it reaches the end.
-	while (getline(in, str))
+	std::string str;
+	// Read the next line from File untill it reaches the end.
+	while (std::getline(in, str))
 	{
-		string::size_type sz;   // alias of size_t
-        int i_dec = stoi(str,&sz);
+		std::string::size_type sz;   // alias of size_t
+        int i_dec = std::stoi(str,&sz);
 		vectorWithValues->push_back(i_dec);
         VECTOR_SIZE++;
 	}
