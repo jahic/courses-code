@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
        if (CPU_ISSET(j, &cpuset))
            printf("    CPU %d\n", j);
 
-   pthread_create(&thread_child, NULL, thread_function, NULL); 
+   pthread_create(&thread_child, NULL, &thread_function, NULL); 
    // Set affinity of the child thread.
    s = pthread_setaffinity_np(thread_child, sizeof(cpu_set_t), &cpuset_child);
    if (s != 0)
