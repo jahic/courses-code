@@ -38,12 +38,11 @@ int main(int argc, char *argv[])
 
    thread = pthread_self();
 
-   printf("Main thread[%ld]::hello world.\n", syscall(SYS_gettid));
-
-   /* Set affinity mask to include CPUs 0 to 7 */
+   printf("Main thread[%ld]::hello world.\n", syscall(SYS_gettid));   
 
    CPU_ZERO(&cpuset);
    CPU_ZERO(&cpuset_child);
+   /* Set affinity mask to include CPUs 0 to 7 */
    for (j = 0; j < 8; j++)
        CPU_SET(j, &cpuset);
 

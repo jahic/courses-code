@@ -1,5 +1,5 @@
-SRC=testCpthread.c
-EXECUTABLE=testCpthread
+SRC=testPosixPrioritySet.c
+EXECUTABLE=testPosixPrioritySet
 CC=gcc
 CFLAGS=-pthread -Wall
 LIBS=-lpthread

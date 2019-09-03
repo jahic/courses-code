@@ -5,14 +5,14 @@ CFLAGS=-pthread -Wall
 LIBS=-lpthread
 
 #Object files
-OBJS=$(SRC:.cpp=.o)
+OBJS=$(SRC:.c=.o)
 
 all: $(EXECUTABLE)
 	@echo Compiled succesfully!
 
 $(EXECUTABLE): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXECUTABLE) $(OBJS) $(LIBS)
-.cpp.o:
+.c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 clean:
 	rm *.o $(EXECUTABLE)
