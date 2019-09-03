@@ -33,8 +33,6 @@ std::chrono::duration<double> elapsedTimeFindOccurence;
 
 mutex lSum, lMin, lMax, lFreq;
 
-long numberOfOccurences=0;
-
 void generateVectorWithValues();
 void generateFileWithRandomValues(string fileName);
 void readValuesFromMatrixToVector(string fileName);
