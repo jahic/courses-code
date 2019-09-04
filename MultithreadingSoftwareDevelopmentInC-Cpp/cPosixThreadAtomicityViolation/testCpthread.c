@@ -17,6 +17,8 @@ void* withdraw()
     printf("Child thread::withdraw -10.\n");
     pthread_mutex_lock(&lock);
         accountState = accountState - 10;
+        // Open file result
+        fileRes = fopen("result.txt", "wb");
     pthread_mutex_unlock(&lock);
 
     printf("Child thread::withdraw write the result to a file.\n");
@@ -51,9 +53,6 @@ int main()
     // Init account.
     accountState = 100;
 
-    // Open file result
-    fileRes = fopen("result.txt", "wb");
-
     // Create hreads
     pthread_create(&thread_earn, NULL, &load, NULL); 
     pthread_create(&thread_spend, NULL, &withdraw, NULL);
@@ -65,4 +64,3 @@ int main()
     printf("Account = %f.\n", accountState);
     return 0; 
 }
-
